@@ -1,10 +1,10 @@
-# Ember West
+# snüg
 
-A fast, dependency-light storefront for a Western Australian wool sauna-hat business. Static assets are hosted on Cloudflare Workers; checkout is designed to hand off to Square Payment Links.
+A fast, dependency-light storefront by Wayne Atkinson for a Western Australian wool sauna-hat business. Static assets are hosted on Cloudflare Workers; checkout is designed to hand off to Square Payment Links.
 
 ## Customise before launch
 
-1. Update the placeholder brand, email, product names, copy and prices in `public/index.html`.
+1. Update the contact email, product names, copy and prices in `public/index.html`.
 2. Create a Square Payment Link for each product.
 3. Paste those URLs into `CHECKOUT_LINKS` at the top of `public/app.js`.
 4. Connect the newsletter form to your email platform; it currently shows a local success message only.

@@ -36,7 +36,7 @@ img { display: block; max-width: 100%; }
 .bag-count { display: inline-grid; place-items: center; width: 22px; height: 22px; margin-left: .35rem; border-radius: 50%; background: var(--ink); color: white; font-size: 10px; }
 
 .hero { position: relative; min-height: calc(100svh - 105px); color: white; overflow: hidden; }
-.hero-media { position: absolute; inset: 0; background: url('/assets/ember-west-hero.jpg') center center / cover no-repeat; transform: scale(1.01); animation: hero-in 1.2s cubic-bezier(.2,.7,.2,1) both; }
+.hero-media { position: absolute; inset: 0; background: url('/assets/snug-hero.jpg') center center / cover no-repeat; transform: scale(1.01); animation: hero-in 1.2s cubic-bezier(.2,.7,.2,1) both; }
 .hero-shade { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(11,16,18,.72) 0%, rgba(11,16,18,.25) 45%, rgba(11,16,18,.03) 78%), linear-gradient(0deg, rgba(0,0,0,.26), transparent 42%); }
 .hero-copy { position: relative; z-index: 1; max-width: 760px; padding: clamp(5rem, 12vh, 9rem) clamp(1.25rem, 7vw, 7rem); }
 .eyebrow { margin: 0 0 1.3rem; font-size: 10px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; }
