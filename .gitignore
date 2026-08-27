@@ -1,0 +1,10 @@
+node_modules/
+.wrangler/
+.dev.vars
+.env
+.env.*
+.DS_Store
+npm-debug.log*
+
+# Generated PNG source files; the optimised JPGs are deployed.
+public/assets/*.png
