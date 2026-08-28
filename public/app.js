@@ -1,17 +1,8 @@
-// Paste your Square Payment Link URLs here. Leave blank until your products exist in Square.
-const CHECKOUT_LINKS = {
-  "The Dune": "",
-  "The Coal": "",
-  "The Ember": "",
-};
+// Paste the Square Payment Link for The Original here when it is ready.
+const CHECKOUT_LINK = "";
+const PRODUCT = { name: "The Original", colour: "Natural oat", price: 79 };
+const state = { quantity: 0 };
 
-const PRODUCTS = {
-  "The Dune": { price: 79, colour: "Oat", tone: "oat" },
-  "The Coal": { price: 79, colour: "Charcoal", tone: "coal" },
-  "The Ember": { price: 79, colour: "Burnt clay", tone: "ember" },
-};
-
-const state = { selected: "The Dune", cart: [] };
 const bagButton = document.querySelector(".bag-button");
 const bagCount = document.querySelector(".bag-count");
 const cart = document.querySelector(".cart");
@@ -19,21 +10,7 @@ const backdrop = document.querySelector(".cart-backdrop");
 const cartItems = document.querySelector(".cart-items");
 const cartEmpty = document.querySelector(".cart-empty");
 const cartFooter = document.querySelector(".cart-footer");
-const cartTotal = document.querySelector(".cart-total");
 const setupDialog = document.querySelector(".setup-dialog");
-
-function setSelected(productName) {
-  state.selected = productName;
-  const product = PRODUCTS[productName];
-  document.querySelectorAll(".style-option").forEach((option) => {
-    const active = option.dataset.product === productName;
-    option.classList.toggle("active", active);
-    option.setAttribute("aria-pressed", String(active));
-  });
-  document.querySelector(".selected-style").textContent = `${productName} — ${product.colour}`;
-  document.querySelector(".primary-product-name").textContent = productName;
-  document.querySelector(".mobile-product-name").textContent = `${productName} · $${product.price}`;
-}
 
 function openCart() {
   cart.classList.add("open");
@@ -53,86 +30,57 @@ function closeCart({ restoreFocus = true } = {}) {
   if (restoreFocus) bagButton.focus();
 }
 
-function addSelected() {
-  const product = PRODUCTS[state.selected];
-  state.cart.push({ name: state.selected, ...product });
+function renderCart() {
+  cartItems.innerHTML = state.quantity
+    ? `<div class="cart-row"><span class="cart-thumb" aria-hidden="true"></span><div><h3>${PRODUCT.name}</h3><p>${PRODUCT.colour} · Qty ${state.quantity} · $${PRODUCT.price * state.quantity} AUD</p></div><button class="remove-item" type="button">Remove</button></div>`
+    : "";
+  bagCount.textContent = state.quantity;
+  document.querySelector(".cart-title-count").textContent = `(${state.quantity})`;
+  document.querySelector(".cart-total").textContent = `$${PRODUCT.price * state.quantity} AUD`;
+  cartEmpty.hidden = state.quantity > 0;
+  cartFooter.hidden = state.quantity === 0;
+}
+
+document.querySelectorAll("[data-add-product]").forEach((button) => button.addEventListener("click", () => {
+  state.quantity += 1;
   renderCart();
   openCart();
-}
-
-function renderCart() {
-  const grouped = state.cart.reduce((items, product) => {
-    items[product.name] ??= { ...product, quantity: 0 };
-    items[product.name].quantity += 1;
-    return items;
-  }, {});
-  cartItems.innerHTML = Object.values(grouped).map((item) => `
-    <div class="cart-row">
-      <span class="cart-thumb ${item.tone}" aria-hidden="true"></span>
-      <div><h3>${item.name}</h3><p>${item.colour} · Qty ${item.quantity} · $${item.price * item.quantity} AUD</p></div>
-      <button class="remove-item" type="button" data-remove="${item.name}">Remove</button>
-    </div>
-  `).join("");
-  const count = state.cart.length;
-  bagCount.textContent = count;
-  document.querySelector(".cart-title-count").textContent = `(${count})`;
-  cartTotal.textContent = `$${state.cart.reduce((sum, item) => sum + item.price, 0)} AUD`;
-  cartEmpty.hidden = count > 0;
-  cartFooter.hidden = count === 0;
-}
-
-document.querySelectorAll(".style-option").forEach((option) => option.addEventListener("click", () => setSelected(option.dataset.product)));
-document.querySelectorAll("[data-add-selected]").forEach((button) => button.addEventListener("click", addSelected));
+}));
 cartItems.addEventListener("click", (event) => {
-  const button = event.target.closest("[data-remove]");
-  if (!button) return;
-  const index = state.cart.findIndex((item) => item.name === button.dataset.remove);
-  if (index > -1) state.cart.splice(index, 1);
+  if (!event.target.closest(".remove-item")) return;
+  state.quantity = Math.max(0, state.quantity - 1);
   renderCart();
 });
 bagButton.addEventListener("click", openCart);
 document.querySelector(".cart-close").addEventListener("click", () => closeCart());
 document.querySelector(".cart-shop").addEventListener("click", () => closeCart({ restoreFocus: false }));
 backdrop.addEventListener("click", () => closeCart());
-
 document.querySelector(".checkout-button").addEventListener("click", () => {
-  const uniqueProducts = [...new Set(state.cart.map((item) => item.name))];
-  const directLink = uniqueProducts.length === 1 ? CHECKOUT_LINKS[uniqueProducts[0]] : "";
-  if (directLink) return void (window.location.href = directLink);
+  if (CHECKOUT_LINK) return void (window.location.href = CHECKOUT_LINK);
   closeCart({ restoreFocus: false });
   setupDialog.showModal();
 });
-
 document.querySelector(".dialog-close").addEventListener("click", () => setupDialog.close());
 setupDialog.addEventListener("click", (event) => { if (event.target === setupDialog) setupDialog.close(); });
-document.querySelector(".signup-form").addEventListener("submit", (event) => {
-  event.preventDefault();
-  event.currentTarget.querySelector(".form-status").textContent = "You’re on the hot list.";
-  event.currentTarget.reset();
-});
+document.addEventListener("keydown", (event) => { if (event.key === "Escape" && cart.classList.contains("open")) closeCart(); });
 
-const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add("visible");
-      revealObserver.unobserve(entry.target);
-    }
-  });
-}, { threshold: .12 });
+const revealObserver = new IntersectionObserver((entries) => entries.forEach((entry) => {
+  if (entry.isIntersecting) {
+    entry.target.classList.add("visible");
+    revealObserver.unobserve(entry.target);
+  }
+}), { threshold: .12 });
 document.querySelectorAll(".reveal").forEach((element) => revealObserver.observe(element));
 
 const mobileBuy = document.querySelector(".mobile-buy");
 function updateMobileBuy() {
-  const rect = document.querySelector("#shop").getBoundingClientRect();
-  const shouldShow = window.innerWidth <= 720 && window.scrollY > window.innerHeight * .65 && (rect.bottom < 0 || rect.top > window.innerHeight);
-  mobileBuy.classList.toggle("visible", shouldShow);
-  mobileBuy.setAttribute("aria-hidden", String(!shouldShow));
+  const section = document.querySelector("#original").getBoundingClientRect();
+  const show = window.innerWidth <= 700 && window.scrollY > window.innerHeight * .65 && (section.bottom < 0 || section.top > window.innerHeight);
+  mobileBuy.classList.toggle("visible", show);
+  mobileBuy.setAttribute("aria-hidden", String(!show));
 }
 window.addEventListener("scroll", updateMobileBuy, { passive: true });
 window.addEventListener("resize", updateMobileBuy);
-
-document.addEventListener("keydown", (event) => { if (event.key === "Escape" && cart.classList.contains("open")) closeCart(); });
 document.querySelector("#year").textContent = new Date().getFullYear();
-setSelected(state.selected);
 renderCart();
 updateMobileBuy();
