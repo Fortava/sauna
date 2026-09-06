@@ -1,0 +1,37 @@
+<section class="collection-page" {{ section.shopify_attributes }}>
+  <header class="collection-page__header">
+    <h1>{{ collection.title | default: 'Products' }}</h1>
+    {% if collection.description != blank %}
+      <div class="rte">{{ collection.description }}</div>
+    {% endif %}
+  </header>
+
+  {% paginate collection.products by 12 %}
+    <div class="product-grid">
+      {% for product in collection.products %}
+        <a class="product-card" href="{{ product.url }}">
+          {% if product.featured_media %}
+            {{ product.featured_media | image_url: width: 800 | image_tag: loading: 'lazy', alt: product.title }}
+          {% endif %}
+          <h2>{{ product.title }}</h2>
+          <p>{% render 'price', product: product %}</p>
+        </a>
+      {% else %}
+        <p>{{ 'collections.general.empty' | t }}</p>
+      {% endfor %}
+    </div>
+    {% if paginate.pages > 1 %}
+      <nav class="pagination">
+        {% if paginate.previous %}<a href="{{ paginate.previous.url }}">{{ 'general.pagination.previous' | t }}</a>{% endif %}
+        {% if paginate.next %}<a href="{{ paginate.next.url }}">{{ 'general.pagination.next' | t }}</a>{% endif %}
+      </nav>
+    {% endif %}
+  {% endpaginate %}
+</section>
+
+{% schema %}
+{
+  "name": "Collection",
+  "settings": []
+}
+{% endschema %}

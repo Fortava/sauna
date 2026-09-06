@@ -1,0 +1,46 @@
+<header class="site-header" id="top" {{ section.shopify_attributes }}>
+  <a class="brand" href="{{ routes.root_url }}" aria-label="{{ settings.brand_name | default: shop.name }} home">
+    {{ settings.brand_name | default: shop.name }}
+  </a>
+
+  <nav aria-label="Main navigation">
+    {%- if section.settings.menu != blank -%}
+      {%- for link in section.settings.menu.links -%}
+        <a href="{{ link.url }}"{% if link.active %} aria-current="page"{% endif %}>{{ link.title }}</a>
+      {%- endfor -%}
+    {%- else -%}
+      <a href="{{ routes.root_url }}#original">Shop</a>
+      <a href="{{ routes.root_url }}#reason">Why wool</a>
+      {%- if blogs.info -%}
+        <a href="{{ blogs.info.url }}">Sauna Guides</a>
+      {%- endif -%}
+    {%- endif -%}
+  </nav>
+
+  {% if section.settings.show_bag %}
+    <button class="bag-button" type="button" data-cart-open aria-controls="cart" aria-expanded="false">
+      {{ 'general.accessibility.cart' | t }}
+      <span class="bag-count" data-cart-count aria-live="polite">{{ cart.item_count }}</span>
+    </button>
+  {% endif %}
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "info": "Leave empty to use Shop, Why wool, and Sauna Guides."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_bag",
+      "label": "Show bag button",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

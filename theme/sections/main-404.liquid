@@ -1,0 +1,12 @@
+<section class="page-content page-404" {{ section.shopify_attributes }}>
+  <h1>{{ '404.title' | t }}</h1>
+  <p>{{ '404.subtext' | t }}</p>
+  <a class="button button-dark" href="{{ routes.root_url }}">{{ '404.link' | t }}</a>
+</section>
+
+{% schema %}
+{
+  "name": "404",
+  "settings": []
+}
+{% endschema %}

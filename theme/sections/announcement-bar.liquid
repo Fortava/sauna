@@ -1,0 +1,33 @@
+{%- if section.settings.item_1 != blank or section.settings.item_2 != blank or section.settings.item_3 != blank -%}
+  <div class="announcement" {{ section.shopify_attributes }}>
+    {% if section.settings.item_1 != blank %}<span>{{ section.settings.item_1 }}</span>{% endif %}
+    {% if section.settings.item_2 != blank %}<strong>{{ section.settings.item_2 }}</strong>{% endif %}
+    {% if section.settings.item_3 != blank %}<span>{{ section.settings.item_3 }}</span>{% endif %}
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Announcement bar",
+  "settings": [
+    {
+      "type": "text",
+      "id": "item_1",
+      "label": "Left text",
+      "default": "Natural wool"
+    },
+    {
+      "type": "text",
+      "id": "item_2",
+      "label": "Centre text",
+      "default": "Designed in Australia"
+    },
+    {
+      "type": "text",
+      "id": "item_3",
+      "label": "Right text",
+      "default": "Ukrainian felt"
+    }
+  ]
+}
+{% endschema %}

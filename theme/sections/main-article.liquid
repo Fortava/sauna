@@ -1,0 +1,38 @@
+<article class="article-page" {{ section.shopify_attributes }}>
+  <header class="article-page__header">
+    <p class="eyebrow ember-text">
+      <a href="{{ blog.url }}">{{ 'blogs.article.back' | t }}</a>
+    </p>
+    <h1>{{ article.title }}</h1>
+    <p class="article-page__meta">{{ article.published_at | date: '%d %B %Y' }}{% if article.author %} · {{ article.author }}{% endif %}</p>
+  </header>
+
+  {% if article.image and section.settings.show_image %}
+    <div class="article-page__image">
+      {{ article.image | image_url: width: 1600 | image_tag:
+        loading: 'eager',
+        widths: '600,900,1200,1600',
+        sizes: '100vw',
+        alt: article.image.alt | default: article.title
+      }}
+    </div>
+  {% endif %}
+
+  <div class="article-page__content rte">
+    {{ article.content }}
+  </div>
+</article>
+
+{% schema %}
+{
+  "name": "Article",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_image",
+      "label": "Show featured image",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

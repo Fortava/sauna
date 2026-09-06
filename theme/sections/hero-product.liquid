@@ -1,0 +1,261 @@
+{%- liquid
+  assign product = section.settings.product
+  if product == blank and section.settings.product_handle != blank
+    assign product = all_products[section.settings.product_handle]
+  endif
+
+  assign current_variant = product.selected_or_first_available_variant
+  if product
+    for variant in product.variants
+      if variant.available
+        assign current_variant = variant
+        break
+      endif
+    endfor
+  endif
+
+  assign hero_image = section.settings.image
+  if hero_image == blank and product and product.featured_media
+    assign hero_image = product.featured_media
+  endif
+
+  assign heading = section.settings.heading
+  if heading == blank and product
+    assign heading = product.title
+  endif
+
+  assign subcopy = section.settings.subcopy
+  if subcopy == blank and product and product.description != blank
+    assign subcopy = product.description | strip_html | truncate: 180
+  endif
+-%}
+
+<section
+  class="hero"
+  id="original"
+  aria-labelledby="HeroTitle-{{ section.id }}"
+  data-product-section
+  {{ section.shopify_attributes }}
+>
+  <div
+    class="hero-product"
+    role="img"
+    aria-label="{{ section.settings.image_alt | default: heading | escape }}"
+    {% if hero_image != blank %}
+      style="background-image: url('{{ hero_image | image_url: width: 1800 }}');"
+    {% else %}
+      style="background-image: url('{{ 'born-pair.png' | asset_url }}');"
+    {% endif %}
+  ></div>
+
+  <div class="hero-copy-panel">
+    {% if section.settings.show_logo %}
+      <div class="hero-logo" aria-hidden="true">{{ settings.brand_name | default: shop.name }}</div>
+    {% endif %}
+
+    {% if section.settings.eyebrow != blank %}
+      <p class="eyebrow ember-text">{{ section.settings.eyebrow }}</p>
+    {% endif %}
+
+    <h1 id="HeroTitle-{{ section.id }}">{{ heading | newline_to_br }}</h1>
+
+    {% if subcopy != blank %}
+      <p>{{ subcopy }}</p>
+    {% endif %}
+
+    {% if product %}
+      {%- form 'product', product, id: 'HeroProductForm', class: 'hero-product-form', data-product-form: '' -%}
+        <input type="hidden" name="id" value="{{ current_variant.id }}" data-variant-id>
+
+        {% if product.has_only_default_variant == false %}
+          {% for option in product.options_with_values %}
+            <fieldset class="variant-picker" data-option-index="{{ forloop.index0 }}">
+              <legend>
+                {{ option.name }}
+                <span class="selected-variant" data-selected-option>{{ current_variant.options[forloop.index0] }}</span>
+              </legend>
+              <div>
+                {% for value in option.values %}
+                  {%- liquid
+                    assign option_disabled = true
+                    for variant in product.variants
+                      if variant.available and variant.options[forloop.parentloop.index0] == value
+                        assign option_disabled = false
+                        break
+                      endif
+                    endfor
+
+                    assign is_active = false
+                    if current_variant.options[forloop.parentloop.index0] == value
+                      assign is_active = true
+                    endif
+
+                    assign swatch_class = ''
+                    assign value_down = value | downcase
+                    if value_down contains 'oat'
+                      assign swatch_class = 'oat-swatch'
+                    elsif value_down contains 'charcoal' or value_down contains 'coal'
+                      assign swatch_class = 'charcoal-swatch'
+                    endif
+                  -%}
+                  <button
+                    class="variant{% if is_active %} active{% endif %}"
+                    type="button"
+                    data-option-value="{{ value | escape }}"
+                    aria-pressed="{{ is_active }}"
+                    {% if option_disabled %}disabled{% endif %}
+                  >
+                    {% if swatch_class != blank %}<i class="swatch {{ swatch_class }}"></i>{% endif %}
+                    {{ value }}
+                  </button>
+                {% endfor %}
+              </div>
+            </fieldset>
+          {% endfor %}
+        {% endif %}
+
+        <div class="hero-purchase">
+          <button
+            class="primary-add"
+            type="submit"
+            name="add"
+            data-add-to-cart
+            {% unless current_variant.available %}disabled{% endunless %}
+          >
+            <span data-add-label>
+              {% if current_variant.available %}
+                {{ section.settings.add_label | default: 'Add to bag' }}
+              {% else %}
+                {{ 'products.product.sold_out' | t }}
+              {% endif %}
+            </span>
+            <span>→</span>
+          </button>
+          <strong data-product-price>{% render 'price', product: product, use_variant: true %}</strong>
+        </div>
+
+        {% if section.settings.meta_line != blank %}
+          <small>
+            <span data-hero-colour>{{ current_variant.title }}</span>
+            · {{ section.settings.meta_line }}
+          </small>
+        {% endif %}
+
+        <script type="application/json" data-product-json>
+          {{ product | json }}
+        </script>
+      {%- endform -%}
+    {% else %}
+      <p class="hero-setup-note">Select the featured product in the theme editor so price, colours, and cart work from Shopify.</p>
+    {% endif %}
+  </div>
+
+  {% if product and section.settings.show_mobile_buy %}
+    <div class="mobile-buy" data-mobile-buy aria-hidden="true">
+      <div>
+        {% if section.settings.mobile_eyebrow != blank %}
+          <small>{{ section.settings.mobile_eyebrow }}</small>
+        {% endif %}
+        <strong data-mobile-buy-label>
+          {{ product.title }} · {{ current_variant.title }} · {{ current_variant.price | money }}
+        </strong>
+      </div>
+      <button type="button" data-mobile-add {% unless current_variant.available %}disabled{% endunless %}>
+        {{ section.settings.mobile_add_label | default: 'Add' }}
+      </button>
+    </div>
+  {% endif %}
+</section>
+
+{% schema %}
+{
+  "name": "Hero product",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Featured product",
+      "info": "Price, variants, and availability come from this Shopify product."
+    },
+    {
+      "type": "text",
+      "id": "product_handle",
+      "label": "Product handle fallback",
+      "default": "premium-wool-sauna-hat",
+      "info": "Used only if no product is picked above. Match the product handle in Admin → Products."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Hero image override",
+      "info": "Leave empty to use the product’s featured image."
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Hero image description",
+      "default": "Premium organic wool felt sauna hats in natural oat and charcoal"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_logo",
+      "label": "Show brand wordmark",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Premium organic wool · Designed in Australia"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Premium organic\nwool sauna hats."
+    },
+    {
+      "type": "textarea",
+      "id": "subcopy",
+      "label": "Supporting copy",
+      "default": "Designed in Australia and rooted in authentic Nordic tradition. Crafted from premium heavyweight wool felt in Ukraine for dense thermal defence built to last."
+    },
+    {
+      "type": "text",
+      "id": "meta_line",
+      "label": "Meta line under price",
+      "default": "One flexible size · Designed in Australia"
+    },
+    {
+      "type": "text",
+      "id": "add_label",
+      "label": "Add to bag label",
+      "default": "Add to bag"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_mobile_buy",
+      "label": "Show mobile buy bar",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "mobile_eyebrow",
+      "label": "Mobile buy eyebrow",
+      "default": "Premium wool · Designed in Australia"
+    },
+    {
+      "type": "text",
+      "id": "mobile_add_label",
+      "label": "Mobile add label",
+      "default": "Add"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero product"
+    }
+  ]
+}
+{% endschema %}

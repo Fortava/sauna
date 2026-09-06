@@ -1,0 +1,12 @@
+{% style %}
+  :root {
+    --ink: {{ settings.color_ink }};
+    --cream: {{ settings.color_cream }};
+    --sand: {{ settings.color_sand }};
+    --ember: {{ settings.color_ember }};
+    --muted: {{ settings.color_muted }};
+    --line: {{ settings.color_ink | color_modify: 'alpha', 0.19 }};
+    --serif: "Iowan Old Style", Baskerville, "Times New Roman", serif;
+    --sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+{% endstyle %}

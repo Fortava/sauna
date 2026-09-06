@@ -1,0 +1,91 @@
+<div class="cart-backdrop" data-cart-backdrop hidden></div>
+<aside class="cart" id="cart" aria-label="{{ 'general.accessibility.cart' | t }}" aria-hidden="true" data-cart-drawer {{ section.shopify_attributes }}>
+  <div class="cart-header">
+    <div>
+      <p class="eyebrow ember-text">{{ section.settings.eyebrow | default: 'Your selection' }}</p>
+      <h2>
+        {{ 'cart.title' | t }}
+        <span class="cart-title-count" data-cart-title-count>({{ cart.item_count }})</span>
+      </h2>
+    </div>
+    <button class="cart-close" type="button" data-cart-close aria-label="{{ 'general.accessibility.close' | t }}">×</button>
+  </div>
+
+  <div class="cart-items" data-cart-items>
+    {% for item in cart.items %}
+      <div class="cart-row" data-key="{{ item.key }}">
+        {% if item.image %}
+          <img class="cart-thumb" src="{{ item.image | image_url: width: 160 }}" alt="{{ item.product.title | escape }}" width="72" height="72" loading="lazy">
+        {% else %}
+          <span class="cart-thumb cart-thumb--empty" aria-hidden="true"></span>
+        {% endif %}
+        <div>
+          <h3>{{ item.product.title }}</h3>
+          <p>
+            {% unless item.product.has_only_default_variant %}{{ item.variant.title }} · {% endunless %}
+            Qty {{ item.quantity }} · {{ item.final_line_price | money }}
+          </p>
+        </div>
+        <button class="remove-item" type="button" data-remove-item="{{ item.key }}">{{ 'cart.remove' | t }}</button>
+      </div>
+    {% endfor %}
+  </div>
+
+  <div class="cart-empty" data-cart-empty {% if cart.item_count > 0 %}hidden{% endif %}>
+    <p>{{ section.settings.empty_heading | default: 'Still deciding?' }}</p>
+    <a href="{{ section.settings.empty_link | default: routes.root_url }}" class="line-link cart-shop" data-cart-close>
+      {{ section.settings.empty_link_label | default: 'Meet the hat ↓' }}
+    </a>
+  </div>
+
+  <div class="cart-footer" data-cart-footer {% if cart.item_count == 0 %}hidden{% endif %}>
+    <div class="subtotal">
+      <span>{{ 'cart.subtotal' | t }}</span>
+      <strong class="cart-total" data-cart-total>{{ cart.total_price | money }}</strong>
+    </div>
+    <form action="{{ routes.cart_url }}" method="post">
+      <button class="checkout-button" type="submit" name="checkout">
+        {{ section.settings.checkout_label | default: 'Secure checkout' }}
+        <span>→</span>
+      </button>
+    </form>
+    <small>{{ 'cart.taxes_and_shipping' | t }}</small>
+  </div>
+</aside>
+
+{% schema %}
+{
+  "name": "Cart drawer",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Your selection"
+    },
+    {
+      "type": "text",
+      "id": "empty_heading",
+      "label": "Empty heading",
+      "default": "Still deciding?"
+    },
+    {
+      "type": "url",
+      "id": "empty_link",
+      "label": "Empty state link"
+    },
+    {
+      "type": "text",
+      "id": "empty_link_label",
+      "label": "Empty state link label",
+      "default": "Meet the hat ↓"
+    },
+    {
+      "type": "text",
+      "id": "checkout_label",
+      "label": "Checkout button",
+      "default": "Secure checkout"
+    }
+  ]
+}
+{% endschema %}

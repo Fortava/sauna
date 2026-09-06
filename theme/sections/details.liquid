@@ -1,0 +1,89 @@
+<section class="details" id="details" aria-labelledby="DetailsTitle-{{ section.id }}" {{ section.shopify_attributes }}>
+  <div>
+    <h2 id="DetailsTitle-{{ section.id }}">{{ section.settings.heading | newline_to_br }}</h2>
+  </div>
+  <dl>
+    {% for block in section.blocks %}
+      <div {{ block.shopify_attributes }}>
+        <dt>{{ block.settings.label }}</dt>
+        <dd>{{ block.settings.value }}</dd>
+      </div>
+    {% endfor %}
+  </dl>
+</section>
+
+{% schema %}
+{
+  "name": "Product details",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "The\ndetails."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Detail row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Material"
+        },
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Value",
+          "default": "Premium heavyweight wool felt"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product details",
+      "blocks": [
+        {
+          "type": "row",
+          "settings": {
+            "label": "Material",
+            "value": "100% natural wool felt"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "label": "Colours",
+            "value": "Natural oat · Charcoal"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "label": "Fit",
+            "value": "Flexible one-size silhouette"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "label": "Origin",
+            "value": "Designed in Australia · Crafted in Ukraine"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "label": "Care",
+            "value": "Cool hand wash · reshape · air dry"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,70 @@
+<section class="blog-index" {{ section.shopify_attributes }}>
+  <header class="blog-index__header">
+    <p class="eyebrow ember-text">{{ section.settings.eyebrow | default: 'Sauna Guides' }}</p>
+    <h1>{{ blog.title }}</h1>
+    {% if section.settings.subcopy != blank %}
+      <p>{{ section.settings.subcopy }}</p>
+    {% endif %}
+  </header>
+
+  <div class="guides__grid">
+    {% paginate blog.articles by section.settings.per_page %}
+      {% for article in blog.articles %}
+        <article class="guide-card">
+          <a href="{{ article.url }}" class="guide-card__media">
+            {% if article.image %}
+              {{ article.image | image_url: width: 900 | image_tag: loading: 'lazy', alt: article.title }}
+            {% endif %}
+          </a>
+          <div class="guide-card__copy">
+            <p class="eyebrow">{{ article.published_at | date: '%d %b %Y' }}</p>
+            <h2><a href="{{ article.url }}">{{ article.title }}</a></h2>
+            {% if article.excerpt != blank %}
+              <p>{{ article.excerpt | strip_html | truncate: 160 }}</p>
+            {% endif %}
+          </div>
+        </article>
+      {% endfor %}
+
+      {% if paginate.pages > 1 %}
+        <nav class="pagination" aria-label="Pagination">
+          {% if paginate.previous %}
+            <a href="{{ paginate.previous.url }}">{{ 'general.pagination.previous' | t }}</a>
+          {% endif %}
+          {% if paginate.next %}
+            <a href="{{ paginate.next.url }}">{{ 'general.pagination.next' | t }}</a>
+          {% endif %}
+        </nav>
+      {% endif %}
+    {% endpaginate %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Blog",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Sauna Guides"
+    },
+    {
+      "type": "textarea",
+      "id": "subcopy",
+      "label": "Supporting copy",
+      "default": "Guides on heat, wool, care, and recovery."
+    },
+    {
+      "type": "range",
+      "id": "per_page",
+      "label": "Articles per page",
+      "min": 3,
+      "max": 12,
+      "step": 1,
+      "default": 6
+    }
+  ]
+}
+{% endschema %}

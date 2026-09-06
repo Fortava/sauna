@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-article",
+      "settings": {
+        "show_image": true
+      }
+    }
+  },
+  "order": ["main"]
+}

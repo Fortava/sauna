@@ -1,0 +1,71 @@
+<footer class="site-footer" {{ section.shopify_attributes }}>
+  <a class="footer-logo" href="{{ routes.root_url }}">{{ settings.brand_name | default: shop.name }}</a>
+
+  {% if section.settings.tagline != blank %}
+    <p>{{ section.settings.tagline | newline_to_br }}</p>
+  {% endif %}
+
+  <div>
+    {% if section.settings.show_email and settings.contact_email != blank %}
+      <a href="mailto:{{ settings.contact_email }}">Email</a>
+    {% endif %}
+    {% if section.settings.show_instagram and settings.social_instagram != blank %}
+      <a href="{{ settings.social_instagram }}" rel="noopener" target="_blank">Instagram</a>
+    {% endif %}
+    {% if section.settings.show_blog %}
+      {%- liquid
+        assign guides = section.settings.blog
+        if guides == blank
+          assign guides = blogs.info
+        endif
+      -%}
+      {% if guides != blank %}
+        <a href="{{ guides.url }}">{{ section.settings.blog_label | default: 'Sauna Guides' }}</a>
+      {% endif %}
+    {% endif %}
+    <small>© {{ 'now' | date: '%Y' }} {{ settings.brand_name | default: shop.name }}</small>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "tagline",
+      "label": "Tagline",
+      "default": "Premium organic wool sauna hats.\nDesigned in Australia. Crafted in Ukraine."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_email",
+      "label": "Show email link",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_instagram",
+      "label": "Show Instagram link",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_blog",
+      "label": "Show blog link",
+      "default": true
+    },
+    {
+      "type": "blog",
+      "id": "blog",
+      "label": "Blog"
+    },
+    {
+      "type": "text",
+      "id": "blog_label",
+      "label": "Blog link label",
+      "default": "Sauna Guides"
+    }
+  ]
+}
+{% endschema %}

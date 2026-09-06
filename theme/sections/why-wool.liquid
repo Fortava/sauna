@@ -1,0 +1,116 @@
+<section class="why-wool" id="reason" aria-labelledby="WhyTitle-{{ section.id }}" {{ section.shopify_attributes }}>
+  <div class="why-wool__intro reveal">
+    {% if section.settings.eyebrow != blank %}
+      <p class="eyebrow ember-text">{{ section.settings.eyebrow }}</p>
+    {% endif %}
+    <h2 id="WhyTitle-{{ section.id }}">{{ section.settings.heading | newline_to_br }}</h2>
+    {% if section.settings.lead != blank %}
+      <p class="why-wool__lead">{{ section.settings.lead }}</p>
+    {% endif %}
+  </div>
+
+  <div class="why-wool__body reveal">
+    {% for block in section.blocks %}
+      <article class="why-wool__block" {{ block.shopify_attributes }}>
+        {% if block.settings.title != blank %}
+          <h3>{{ block.settings.title }}</h3>
+        {% endif %}
+        {% if block.settings.text != blank %}
+          <div class="rte">{{ block.settings.text | newline_to_br }}</div>
+        {% endif %}
+      </article>
+    {% endfor %}
+
+    {% if section.settings.cta_label != blank and section.settings.cta_link != blank %}
+      <a class="button button-dark why-wool__cta" href="{{ section.settings.cta_link }}">
+        {{ section.settings.cta_label }}
+        <span>→</span>
+      </a>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Why wool",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Why wool?"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "The living\nbarrier."
+    },
+    {
+      "type": "textarea",
+      "id": "lead",
+      "label": "Lead",
+      "default": "Your head sits in the hottest zone of the sauna, where temperatures peak and moisture evaporates fastest."
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "CTA label",
+      "default": "Begin the ritual"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "chapter",
+      "name": "Chapter",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "What wool does"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "Wool does what synthetic fibers cannot: it creates a breathable microclimate around your scalp, ears, and hair."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Why wool",
+      "blocks": [
+        {
+          "type": "chapter",
+          "settings": {
+            "title": "Quiet insulation",
+            "text": "Wool does what synthetic fibers cannot: it creates a breathable, microclimate buffer around your scalp, ears, and hair. Instead of trapping heat against the skin, natural wool fibers trap microscopic pockets of still air—slowing thermal transfer while releasing perspiration vapor. The result is pure, quiet insulation that protects delicate hair from thermal breakage and keeps your head clear, calm, and balanced throughout your session."
+          }
+        },
+        {
+          "type": "chapter",
+          "settings": {
+            "title": "Rooted in century-old ritual",
+            "text": "The tradition of the sauna hat is rooted deeply in Northern and Eastern European banya and sauna culture. For centuries, seasoned bathers understood an essential rule of the heat: to sustain the core benefits of deep thermal recovery, the head must remain protected."
+          }
+        },
+        {
+          "type": "chapter",
+          "settings": {
+            "title": "Sourced with intention: Ukrainian wool",
+            "text": "We craft our hats from premium Ukrainian wool, celebrated worldwide for its dense, durable structure and enduring natural integrity. Resilient, water-repellent, and naturally antimicrobial, it maintains its structural form and protective density across countless intense sessions."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

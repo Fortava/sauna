@@ -1,0 +1,95 @@
+<section class="reason performance" id="performance" aria-labelledby="PerformanceTitle-{{ section.id }}" {{ section.shopify_attributes }}>
+  <div class="reason-intro reveal">
+    {% if section.settings.eyebrow != blank %}
+      <p class="eyebrow ember-text">{{ section.settings.eyebrow }}</p>
+    {% endif %}
+    <h2 id="PerformanceTitle-{{ section.id }}">{{ section.settings.heading | newline_to_br }}</h2>
+  </div>
+  <div class="reason-body reveal">
+    {% if section.settings.lead != blank %}
+      <p class="reason-lead">{{ section.settings.lead }}</p>
+    {% endif %}
+    <div class="reason-list">
+      {% for block in section.blocks %}
+        <article {{ block.shopify_attributes }}>
+          <h3>{{ block.settings.title }}</h3>
+          <p>{{ block.settings.text }}</p>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Performance & purpose",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Performance & purpose"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Built for\nthe ritual."
+    },
+    {
+      "type": "textarea",
+      "id": "lead",
+      "label": "Lead paragraph",
+      "default": "Your head sits in the sauna’s highest thermal zone. A wool hat buffers that heat so the session can run longer, clearer, and calmer."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "point",
+      "name": "Point",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Extends session endurance"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "A sauna hat buffers direct heat, helping prevent premature lightheadedness so your core can sustain the full duration needed for recovery benefits."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Performance & purpose",
+      "blocks": [
+        {
+          "type": "point",
+          "settings": {
+            "title": "Extends session endurance",
+            "text": "Your head sits in the sauna’s highest thermal zone, heating far faster than the rest of your body. A sauna hat buffers this direct heat, preventing premature lightheadedness and allowing your core to comfortably sustain the full duration needed for deep cardiovascular and recovery benefits."
+          }
+        },
+        {
+          "type": "point",
+          "settings": {
+            "title": "Protects hair & scalp health",
+            "text": "Intense dry heat strips moisture directly from hair fibers, degrading natural keratin and leaving strands brittle, dry, and prone to breakage. Natural wool acts as a thermal barrier, locking in vital hydration and shielding delicate follicles and sensitive ears from heat damage."
+          }
+        },
+        {
+          "type": "point",
+          "settings": {
+            "title": "Balanced thermoregulation",
+            "text": "By keeping your cranium cool while your body absorbs therapeutic heat, the hat supports steady, uniform vasodilation. This keeps your mind clear and calm throughout the ritual, eliminating common post-sauna fatigue and thermal headaches."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

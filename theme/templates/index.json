@@ -1,0 +1,126 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero-product",
+      "settings": {
+        "product_handle": "premium-wool-sauna-hat",
+        "image_alt": "Premium organic wool felt sauna hats in natural oat and charcoal",
+        "show_logo": true,
+        "eyebrow": "Premium organic wool · Designed in Australia",
+        "heading": "Premium organic\nwool sauna hats.",
+        "subcopy": "Designed in Australia and rooted in authentic Nordic tradition. Each piece is crafted from premium heavyweight wool felt in Ukraine, delivering dense thermal defence built to last a lifetime.",
+        "meta_line": "One flexible size · Designed in Australia",
+        "add_label": "Add to bag",
+        "show_mobile_buy": true,
+        "mobile_eyebrow": "Premium wool · Designed in Australia",
+        "mobile_add_label": "Add"
+      }
+    },
+    "performance": {
+      "type": "performance",
+      "blocks": {
+        "endurance": {
+          "type": "point",
+          "settings": {
+            "title": "Extends session endurance",
+            "text": "Your head sits in the sauna’s highest thermal zone, heating far faster than the rest of your body. A sauna hat buffers this direct heat, preventing premature lightheadedness and allowing your core to comfortably sustain the full duration needed for deep cardiovascular and recovery benefits."
+          }
+        },
+        "hair": {
+          "type": "point",
+          "settings": {
+            "title": "Protects hair & scalp health",
+            "text": "Intense dry heat strips moisture directly from hair fibers, degrading natural keratin and leaving strands brittle, dry, and prone to breakage. Natural wool acts as a thermal barrier, locking in vital hydration and shielding delicate follicles and sensitive ears from heat damage."
+          }
+        },
+        "thermo": {
+          "type": "point",
+          "settings": {
+            "title": "Balanced thermoregulation",
+            "text": "By keeping your cranium cool while your body absorbs therapeutic heat, the hat supports steady, uniform vasodilation. This keeps your mind clear and calm throughout the ritual, eliminating common post-sauna fatigue and thermal headaches."
+          }
+        }
+      },
+      "block_order": ["endurance", "hair", "thermo"],
+      "settings": {
+        "eyebrow": "Performance & purpose",
+        "heading": "Built for\nthe ritual.",
+        "lead": "Your head sits in the sauna’s highest thermal zone. A wool hat buffers that heat so the session can run longer, clearer, and calmer."
+      }
+    },
+    "why_wool": {
+      "type": "why-wool",
+      "blocks": {
+        "insulation": {
+          "type": "chapter",
+          "settings": {
+            "title": "Quiet insulation",
+            "text": "Wool does what synthetic fibers cannot: it creates a breathable, microclimate buffer around your scalp, ears, and hair. Instead of trapping heat against the skin, natural wool fibers trap microscopic pockets of still air—slowing thermal transfer while releasing perspiration vapor. The result is pure, quiet insulation that protects delicate hair from thermal breakage and keeps your head clear, calm, and balanced throughout your session."
+          }
+        },
+        "ritual": {
+          "type": "chapter",
+          "settings": {
+            "title": "Rooted in century-old ritual",
+            "text": "The tradition of the sauna hat is rooted deeply in Northern and Eastern European banya and sauna culture. For centuries, seasoned bathers understood an essential rule of the heat: to sustain the core benefits of deep thermal recovery, the head must remain protected."
+          }
+        },
+        "ukraine": {
+          "type": "chapter",
+          "settings": {
+            "title": "Sourced with intention: Ukrainian wool",
+            "text": "We craft our hats from premium Ukrainian wool, celebrated worldwide for its dense, durable structure and enduring natural integrity. Resilient, water-repellent, and naturally antimicrobial, it maintains its structural form and protective density across countless intense sessions."
+          }
+        }
+      },
+      "block_order": ["insulation", "ritual", "ukraine"],
+      "settings": {
+        "eyebrow": "Why wool?",
+        "heading": "The living\nbarrier.",
+        "lead": "Your head sits in the hottest zone of the sauna, where temperatures peak and moisture evaporates fastest.",
+        "cta_label": "Begin the ritual",
+        "cta_link": "#original"
+      }
+    },
+    "details": {
+      "type": "details",
+      "blocks": {
+        "material": {
+          "type": "row",
+          "settings": { "label": "Material", "value": "100% natural wool felt" }
+        },
+        "colours": {
+          "type": "row",
+          "settings": { "label": "Colours", "value": "Natural oat · Charcoal" }
+        },
+        "fit": {
+          "type": "row",
+          "settings": { "label": "Fit", "value": "Flexible one-size silhouette" }
+        },
+        "origin": {
+          "type": "row",
+          "settings": { "label": "Origin", "value": "Designed in Australia · Crafted in Ukraine" }
+        },
+        "care": {
+          "type": "row",
+          "settings": { "label": "Care", "value": "Cool hand wash · reshape · air dry" }
+        }
+      },
+      "block_order": ["material", "colours", "fit", "origin", "care"],
+      "settings": {
+        "heading": "The\ndetails."
+      }
+    },
+    "guides": {
+      "type": "blog-preview",
+      "settings": {
+        "eyebrow": "Sauna Guides",
+        "heading": "Read the\nritual.",
+        "subcopy": "Guides on heat, wool, care, and recovery — written for the serious sauna ritual.",
+        "show_all_label": "All guides →",
+        "limit": 3
+      }
+    }
+  },
+  "order": ["hero", "performance", "why_wool", "details", "guides"]
+}

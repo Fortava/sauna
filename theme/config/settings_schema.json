@@ -1,0 +1,102 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "BÖRN",
+    "theme_version": "1.0.0",
+    "theme_author": "BÖRN",
+    "theme_documentation_url": "https://bornsauna.com.au",
+    "theme_support_url": "https://bornsauna.com.au/pages/contact"
+  },
+  {
+    "name": "Brand",
+    "settings": [
+      {
+        "type": "text",
+        "id": "brand_name",
+        "label": "Brand name",
+        "default": "BÖRN"
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon"
+      },
+      {
+        "type": "text",
+        "id": "seo_separator",
+        "label": "Title separator",
+        "default": "–"
+      }
+    ]
+  },
+  {
+    "name": "Social & contact",
+    "settings": [
+      {
+        "type": "text",
+        "id": "social_instagram",
+        "label": "Instagram URL",
+        "info": "Full URL, e.g. https://instagram.com/yourhandle"
+      },
+      {
+        "type": "text",
+        "id": "contact_email",
+        "label": "Contact email",
+        "default": "hello@bornsauna.com.au"
+      }
+    ]
+  },
+  {
+    "name": "SEO defaults",
+    "settings": [
+      {
+        "type": "textarea",
+        "id": "seo_home_description",
+        "label": "Homepage meta description fallback",
+        "default": "Discover handcrafted Ukrainian wool sauna hats designed in Australia for thermal protection and comfort. Elevate your heat sessions. Worldwide shipping.",
+        "info": "Used when the homepage has no custom SEO description in Shopify admin."
+      },
+      {
+        "type": "image_picker",
+        "id": "share_image",
+        "label": "Default social share image",
+        "info": "Recommended 1200×630. Falls back to the featured product image when empty."
+      }
+    ]
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "color",
+        "id": "color_ink",
+        "label": "Ink",
+        "default": "#20150f"
+      },
+      {
+        "type": "color",
+        "id": "color_cream",
+        "label": "Cream",
+        "default": "#f2e8d8"
+      },
+      {
+        "type": "color",
+        "id": "color_sand",
+        "label": "Sand",
+        "default": "#ddc8aa"
+      },
+      {
+        "type": "color",
+        "id": "color_ember",
+        "label": "Ember",
+        "default": "#8b3827"
+      },
+      {
+        "type": "color",
+        "id": "color_muted",
+        "label": "Muted text",
+        "default": "#756253"
+      }
+    ]
+  }
+]

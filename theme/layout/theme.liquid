@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="{{ settings.color_ink }}">
+    <link rel="canonical" href="{{ canonical_url }}">
+
+    {%- if settings.favicon != blank -%}
+      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+    {%- else -%}
+      <link rel="icon" href="{{ 'favicon.svg' | asset_url }}" type="image/svg+xml">
+    {%- endif -%}
+
+    {% render 'meta-tags' %}
+    {% render 'structured-data' %}
+
+    {{ content_for_header }}
+
+    {% render 'css-variables' %}
+    {{ 'born.css' | asset_url | stylesheet_tag }}
+    <script>
+      window.themeMoneyFormat = {{ shop.money_format | json }};
+    </script>
+    <script src="{{ 'born.js' | asset_url }}" defer></script>
+  </head>
+  <body class="template-{{ template.name }}{% if template.suffix %} template-{{ template.name }}-{{ template.suffix }}{% endif %}">
+    <a class="skip-link" href="#main">{{ 'general.accessibility.skip_to_content' | t }}</a>
+
+    {% section 'announcement-bar' %}
+    {% section 'header' %}
+
+    <main id="main" role="main">
+      {{ content_for_layout }}
+    </main>
+
+    {% section 'footer' %}
+    {% section 'cart-drawer' %}
+  </body>
+</html>

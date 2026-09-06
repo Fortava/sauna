@@ -1,0 +1,72 @@
+{
+  "general": {
+    "accessibility": {
+      "skip_to_content": "Skip to content",
+      "close": "Close",
+      "cart": "Bag"
+    },
+    "meta": {
+      "page": "Page {{ page }}"
+    },
+    "pagination": {
+      "previous": "Previous",
+      "next": "Next"
+    },
+    "search": {
+      "title": "Search",
+      "placeholder": "Search",
+      "no_results": "No results found for “{{ terms }}”.",
+      "submit": "Search"
+    }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Add to bag",
+      "sold_out": "Sold out",
+      "unavailable": "Unavailable",
+      "price": {
+        "from": "From {{ price }}",
+        "regular": "Regular price",
+        "sale": "Sale price"
+      },
+      "quantity": "Quantity",
+      "colour": "Colour"
+    }
+  },
+  "cart": {
+    "title": "Bag",
+    "subtotal": "Subtotal",
+    "taxes_and_shipping": "Taxes included. Shipping calculated at checkout.",
+    "remove": "Remove",
+    "empty": "Your bag is empty.",
+    "checkout": "Secure checkout",
+    "update": "Update",
+    "item_added": "Added to bag"
+  },
+  "blogs": {
+    "article": {
+      "read_more": "Read",
+      "back": "All guides"
+    }
+  },
+  "collections": {
+    "general": {
+      "empty": "No products found.",
+      "title": "Products"
+    }
+  },
+  "404": {
+    "title": "Page not found",
+    "subtext": "The page you requested does not exist.",
+    "link": "Continue shopping"
+  },
+  "gift_cards": {
+    "issued": {
+      "title": "Your gift card",
+      "subtext": "Your gift card",
+      "shop_link": "Start shopping",
+      "remaining_html": "Remaining {{ balance }}",
+      "code": "Gift card code"
+    }
+  }
+}

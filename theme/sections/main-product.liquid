@@ -1,0 +1,73 @@
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+
+<section class="product-page" data-product-section {{ section.shopify_attributes }}>
+  <div class="product-page__media">
+    {% if product.featured_media %}
+      {{ product.featured_media | image_url: width: 1600 | image_tag:
+        class: 'product-page__image',
+        loading: 'eager',
+        widths: '600,900,1200,1600',
+        sizes: '(min-width: 900px) 50vw, 100vw',
+        alt: product.featured_media.alt | default: product.title
+      }}
+    {% else %}
+      <img class="product-page__image" src="{{ 'born-pair.png' | asset_url }}" alt="{{ product.title | escape }}" width="896" height="1190" loading="eager">
+    {% endif %}
+  </div>
+
+  <div class="product-page__copy">
+    <p class="eyebrow ember-text">{{ product.vendor | default: settings.brand_name }}</p>
+    <h1>{{ product.title }}</h1>
+    <div class="product-page__price" data-product-price>{% render 'price', product: product, use_variant: true %}</div>
+
+    {% form 'product', product, id: 'ProductForm', data-product-form: '' %}
+      <input type="hidden" name="id" value="{{ current_variant.id }}" data-variant-id>
+
+      {% unless product.has_only_default_variant %}
+        {% for option in product.options_with_values %}
+          <fieldset class="variant-picker" data-option-index="{{ forloop.index0 }}">
+            <legend>
+              {{ option.name }}
+              <span class="selected-variant" data-selected-option>{{ current_variant.options[forloop.index0] }}</span>
+            </legend>
+            <div>
+              {% for value in option.values %}
+                <button
+                  class="variant{% if value == current_variant.options[forloop.parentloop.index0] %} active{% endif %}"
+                  type="button"
+                  data-option-value="{{ value | escape }}"
+                  aria-pressed="{% if value == current_variant.options[forloop.parentloop.index0] %}true{% else %}false{% endif %}"
+                >
+                  {{ value }}
+                </button>
+              {% endfor %}
+            </div>
+          </fieldset>
+        {% endfor %}
+      {% endunless %}
+
+      <button class="primary-add" type="submit" name="add" data-add-to-cart {% unless current_variant.available %}disabled{% endunless %}>
+        <span data-add-label>
+          {% if current_variant.available %}{{ 'products.product.add_to_cart' | t }}{% else %}{{ 'products.product.sold_out' | t }}{% endif %}
+        </span>
+        <span>→</span>
+      </button>
+
+      <script type="application/json" data-product-json>
+        {{ product | json }}
+      </script>
+    {% endform %}
+
+    {% if product.description != blank %}
+      <div class="product-page__description rte">{{ product.description }}</div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product",
+  "settings": [],
+  "templates": ["product"]
+}
+{% endschema %}
