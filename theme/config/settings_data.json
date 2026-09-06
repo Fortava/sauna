@@ -1,8 +1,9 @@
 {
   "current": {
     "brand_name": "BÖRN",
-    "contact_email": "hello@bornsauna.com.au",
-    "seo_home_description": "Discover handcrafted Ukrainian wool sauna hats designed in Australia for thermal protection and comfort. Elevate your heat sessions. Worldwide shipping.",
+    "seo_home_title": "Premium Organic Wool Sauna Hats | BÖRN",
+    "seo_home_description": "Handcrafted Ukrainian wool sauna hats designed in Australia for thermal protection, hair & scalp care, and longer heat sessions. Worldwide shipping.",
+    "seo_keywords": "wool sauna hat, organic sauna hat, Ukrainian wool, sauna hat Australia, banya hat",
     "color_ink": "#20150f",
     "color_cream": "#f2e8d8",
     "color_sand": "#ddc8aa",
@@ -28,7 +29,8 @@
         "type": "footer",
         "settings": {
           "tagline": "Premium organic wool sauna hats.\nDesigned in Australia. Crafted in Ukraine.",
-          "show_email": true,
+          "show_contact": true,
+          "contact_label": "Contact",
           "show_instagram": true,
           "show_blog": true,
           "blog_label": "Sauna Guides"

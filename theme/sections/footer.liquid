@@ -6,11 +6,17 @@
   {% endif %}
 
   <div>
-    {% if section.settings.show_email and settings.contact_email != blank %}
-      <a href="mailto:{{ settings.contact_email }}">Email</a>
+    {% if section.settings.show_contact %}
+      {%- liquid
+        assign contact_url = settings.contact_page
+        if contact_url == blank
+          assign contact_url = '/pages/contact'
+        endif
+      -%}
+      <a href="{{ contact_url }}">{{ section.settings.contact_label | default: 'Contact' }}</a>
     {% endif %}
     {% if section.settings.show_instagram and settings.social_instagram != blank %}
-      <a href="{{ settings.social_instagram }}" rel="noopener" target="_blank">Instagram</a>
+      <a href="{{ settings.social_instagram }}" rel="noopener noreferrer" target="_blank">Instagram</a>
     {% endif %}
     {% if section.settings.show_blog %}
       {%- liquid
@@ -39,9 +45,16 @@
     },
     {
       "type": "checkbox",
-      "id": "show_email",
-      "label": "Show email link",
-      "default": true
+      "id": "show_contact",
+      "label": "Show contact page link",
+      "default": true,
+      "info": "Uses Theme settings → Contact page. No email is published on the storefront."
+    },
+    {
+      "type": "text",
+      "id": "contact_label",
+      "label": "Contact link label",
+      "default": "Contact"
     },
     {
       "type": "checkbox",

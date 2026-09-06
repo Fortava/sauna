@@ -4,7 +4,7 @@
       <a href="{{ blog.url }}">{{ 'blogs.article.back' | t }}</a>
     </p>
     <h1>{{ article.title }}</h1>
-    <p class="article-page__meta">{{ article.published_at | date: '%d %B %Y' }}{% if article.author %} · {{ article.author }}{% endif %}</p>
+    <p class="article-page__meta">{{ article.published_at | date: '%d %B %Y' }}</p>
   </header>
 
   {% if article.image and section.settings.show_image %}

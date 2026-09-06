@@ -1,53 +1,135 @@
 {%- liquid
-  assign og_title = page_title | default: shop.name
-  assign og_url = canonical_url
+  assign brand = settings.brand_name | default: shop.name
+  assign separator = settings.seo_separator | default: '–'
   assign og_type = 'website'
-  assign og_description = page_description | default: settings.seo_home_description | default: shop.description | strip_html | truncate: 160
   assign twitter_card = 'summary_large_image'
+  assign robots_content = blank
+  assign og_image_width = 1200
+  assign og_image_height = 630
 
-  if request.page_type == 'product'
-    assign og_type = 'product'
-  elsif request.page_type == 'article'
-    assign og_type = 'article'
-  endif
+  case request.page_type
+    when 'product'
+      assign og_type = 'product'
+      if product.featured_media
+        assign og_image_obj = product.featured_media
+      endif
+    when 'article'
+      assign og_type = 'article'
+      if article.image
+        assign og_image_obj = article.image
+      endif
+    when 'collection'
+      if collection.image
+        assign og_image_obj = collection.image
+      endif
+    when 'blog'
+      assign og_type = 'website'
+  endcase
 
   if page_image
-    assign og_image = page_image | image_url: width: 1200
+    assign og_image_obj = page_image
   elsif settings.share_image != blank
-    assign og_image = settings.share_image | image_url: width: 1200
-  elsif request.page_type == 'product' and product.featured_media
-    assign og_image = product.featured_media | image_url: width: 1200
+    assign og_image_obj = settings.share_image
+  endif
+
+  if og_image_obj
+    assign og_image = og_image_obj | image_url: width: 1200
+    assign og_image_alt = og_image_obj.alt | default: page_title | default: brand
+  endif
+
+  if request.page_type == 'index' and settings.seo_home_title != blank
+    assign document_title = settings.seo_home_title
+  else
+    assign document_title = page_title
+  endif
+
+  if page_description != blank
+    assign meta_description = page_description
+  elsif request.page_type == 'index' and settings.seo_home_description != blank
+    assign meta_description = settings.seo_home_description
+  elsif request.page_type == 'product' and product.description != blank
+    assign meta_description = product.description | strip_html | truncate: 155
+  elsif request.page_type == 'article' and article.excerpt_or_content != blank
+    assign meta_description = article.excerpt_or_content | strip_html | truncate: 155
+  elsif shop.description != blank
+    assign meta_description = shop.description | strip_html | truncate: 155
+  endif
+
+  assign og_title = document_title | default: brand
+  assign og_description = meta_description | default: settings.seo_home_description | strip_html | truncate: 160
+
+  if template.name == 'password' or template.name == 'gift_card'
+    assign robots_content = 'noindex, nofollow'
+  elsif request.page_type == 'cart' or request.page_type == 'search' or request.page_type == 'customers/account' or request.page_type == 'customers/login' or request.page_type == 'customers/register' or request.page_type == 'customers/addresses' or request.page_type == 'customers/order'
+    assign robots_content = 'noindex, follow'
+  elsif request.page_type == 'collection' and current_tags
+    assign robots_content = 'noindex, follow'
+  elsif current_page > 1
+    assign robots_content = 'noindex, follow'
   endif
 -%}
 
 <title>
-  {{ page_title }}
-  {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
-  {%- if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif -%}
-  {%- unless page_title contains shop.name %} {{ settings.seo_separator | default: '–' }} {{ shop.name }}{% endunless -%}
+  {%- if request.page_type == 'index' and settings.seo_home_title != blank -%}
+    {{ settings.seo_home_title | escape }}
+  {%- else -%}
+    {{ page_title | escape }}
+    {%- if current_tags %} {{ separator }} tagged "{{ current_tags | join: ', ' }}"{% endif -%}
+    {%- if current_page != 1 %} {{ separator }} {{ 'general.meta.page' | t: page: current_page }}{% endif -%}
+    {%- unless page_title contains shop.name %} {{ separator }} {{ shop.name }}{% endunless -%}
+  {%- endif -%}
 </title>
 
-{% if page_description %}
-  <meta name="description" content="{{ page_description | escape }}">
-{% elsif request.page_type == 'index' and settings.seo_home_description != blank %}
-  <meta name="description" content="{{ settings.seo_home_description | escape }}">
-{% elsif shop.description != blank %}
-  <meta name="description" content="{{ shop.description | strip_html | truncate: 160 | escape }}">
+{% if meta_description != blank %}
+  <meta name="description" content="{{ meta_description | escape }}">
+{% endif %}
+
+{% if settings.seo_keywords != blank and request.page_type == 'index' %}
+  <meta name="keywords" content="{{ settings.seo_keywords | escape }}">
+{% endif %}
+
+<meta name="author" content="{{ brand | escape }}">
+<link rel="canonical" href="{{ canonical_url }}">
+
+{% if robots_content != blank %}
+  <meta name="robots" content="{{ robots_content }}">
+  <meta name="googlebot" content="{{ robots_content }}">
+{% else %}
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 {% endif %}
 
 <meta property="og:site_name" content="{{ shop.name | escape }}">
-<meta property="og:url" content="{{ og_url }}">
+<meta property="og:url" content="{{ canonical_url }}">
 <meta property="og:title" content="{{ og_title | escape }}">
 <meta property="og:type" content="{{ og_type }}">
+<meta property="og:locale" content="{{ request.locale.iso_code | replace: '-', '_' | default: 'en_AU' }}">
 <meta property="og:description" content="{{ og_description | escape }}">
 {% if og_image %}
-  <meta property="og:image" content="http:{{ og_image }}">
+  <meta property="og:image" content="https:{{ og_image }}">
   <meta property="og:image:secure_url" content="https:{{ og_image }}">
+  <meta property="og:image:width" content="{{ og_image_width }}">
+  <meta property="og:image:height" content="{{ og_image_height }}">
+  <meta property="og:image:alt" content="{{ og_image_alt | escape }}">
 {% endif %}
 
 {% if request.page_type == 'product' %}
-  <meta property="product:price:amount" content="{{ product.selected_or_first_available_variant.price | money_without_currency | strip_html }}">
+  <meta property="product:brand" content="{{ product.vendor | default: brand | escape }}">
+  <meta property="product:availability" content="{% if product.available %}in stock{% else %}out of stock{% endif %}">
+  <meta property="product:condition" content="new">
+  <meta property="product:price:amount" content="{{ product.selected_or_first_available_variant.price | money_without_currency | strip_html | remove: ',' }}">
   <meta property="product:price:currency" content="{{ cart.currency.iso_code }}">
+  {% for tag in product.tags limit: 8 %}
+    <meta property="product:tag" content="{{ tag | escape }}">
+  {% endfor %}
+{% endif %}
+
+{% if request.page_type == 'article' %}
+  <meta property="article:published_time" content="{{ article.published_at | date: '%Y-%m-%dT%H:%M:%SZ' }}">
+  <meta property="article:modified_time" content="{{ article.updated_at | date: '%Y-%m-%dT%H:%M:%SZ' }}">
+  <meta property="article:publisher" content="{{ shop.url }}">
+  {% for tag in article.tags limit: 8 %}
+    <meta property="article:tag" content="{{ tag | escape }}">
+  {% endfor %}
 {% endif %}
 
 <meta name="twitter:card" content="{{ twitter_card }}">
@@ -55,9 +137,8 @@
 <meta name="twitter:description" content="{{ og_description | escape }}">
 {% if og_image %}
   <meta name="twitter:image" content="https:{{ og_image }}">
+  <meta name="twitter:image:alt" content="{{ og_image_alt | escape }}">
 {% endif %}
-
-{% if template.name == 'password' or template.name == 'gift_card' %}
-{% elsif request.page_type == 'search' and search.performed == false %}
-  <meta name="robots" content="noindex">
+{% if settings.social_twitter != blank %}
+  <meta name="twitter:site" content="{{ settings.social_twitter | escape }}">
 {% endif %}
