@@ -1,10 +1,6 @@
-node_modules/
-.wrangler/
-.dev.vars
+.DS_Store
 .env
 .env.*
-.DS_Store
-npm-debug.log*
-
-# Generated PNG source files; the optimised JPGs are deployed.
-public/assets/*.png
+.dev.vars
+*.log
+.shopify/
