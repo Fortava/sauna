@@ -5,19 +5,19 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="robots" content="noindex">
-  <title>{{ 'gift_cards.issued.title' | t: value: gift_card.balance | money, shop: shop.name }}</title>
-  {{ 'born.css' | asset_url | stylesheet_tag }}
+  <title>{{ 'gift_cards.issued.title' | t }} {{ settings.seo_separator | default: '–' }} {{ shop.name }}</title>
   {% render 'css-variables' %}
+  {{ 'born.css' | asset_url | stylesheet_tag }}
 </head>
 <body>
   <main class="page-content gift-card-page">
-    <h1>{{ shop.name }}</h1>
-    <p>{{ 'gift_cards.issued.subtext' | t }}</p>
+    <p class="eyebrow ember-text">{{ settings.brand_name | default: shop.name }}</p>
+    <h1>{{ 'gift_cards.issued.subtext' | t }}</h1>
     <p><strong>{{ gift_card.balance | money }}</strong></p>
     {% if gift_card.enabled and gift_card.expired == false %}
       <p>{{ 'gift_cards.issued.code' | t }}: <code>{{ gift_card.code | format_code }}</code></p>
     {% endif %}
-    <a class="button button-dark" href="{{ shop.url }}">{{ 'gift_cards.issued.shop_link' | t }}</a>
+    <a class="button button-dark" href="{{ routes.root_url }}">{{ 'gift_cards.issued.shop_link' | t }}</a>
   </main>
 </body>
 </html>

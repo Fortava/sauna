@@ -20,7 +20,7 @@
     {{ content_for_header }}
 
     {% render 'css-variables' %}
-    {{ 'born.css' | asset_url | stylesheet_tag: preload: true }}
+    {{ 'born.css' | asset_url | stylesheet_tag }}
     <script>
       window.themeMoneyFormat = {{ shop.money_format | json }};
     </script>
@@ -29,14 +29,13 @@
   <body class="template-{{ template.name }}{% if template.suffix %} template-{{ template.name }}-{{ template.suffix }}{% endif %}">
     <a class="skip-link" href="#main">{{ 'general.accessibility.skip_to_content' | t }}</a>
 
-    {% section 'announcement-bar' %}
-    {% section 'header' %}
+    {% sections 'header-group' %}
 
     <main id="main" role="main">
       {{ content_for_layout }}
     </main>
 
-    {% section 'footer' %}
-    {% section 'cart-drawer' %}
+    {% sections 'footer-group' %}
+    {% sections 'overlay-group' %}
   </body>
 </html>

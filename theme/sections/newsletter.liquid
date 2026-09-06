@@ -31,7 +31,7 @@
         <p class="newsletter__success" role="status">{{ section.settings.success_message }}</p>
       {% endif %}
       {% if form.errors %}
-        <p class="newsletter__error" role="alert">{{ form.errors.messages.email | default: form.errors | join: ', ' }}</p>
+        <p class="newsletter__error" role="alert">{{ form.errors | default_errors }}</p>
       {% endif %}
     {% endform %}
     {% if section.settings.privacy_note != blank %}

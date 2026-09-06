@@ -1,0 +1,15 @@
+{
+  "type": "aside",
+  "name": "Overlay",
+  "sections": {
+    "cart-drawer": {
+      "type": "cart-drawer",
+      "settings": {
+        "empty_heading": "Still deciding?",
+        "empty_link_label": "Meet the hat ↓",
+        "checkout_label": "Secure checkout"
+      }
+    }
+  },
+  "order": ["cart-drawer"]
+}

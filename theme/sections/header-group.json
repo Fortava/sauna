@@ -1,0 +1,46 @@
+{
+  "type": "header",
+  "name": "Header",
+  "sections": {
+    "announcement-bar": {
+      "type": "announcement-bar",
+      "settings": {
+        "item_1": "Natural wool",
+        "item_2": "Designed in Australia",
+        "item_3": "Ukrainian felt"
+      }
+    },
+    "header": {
+      "type": "header",
+      "settings": {
+        "menu": "",
+        "show_bag": true
+      },
+      "blocks": {
+        "shop": {
+          "type": "link",
+          "settings": {
+            "label": "Shop",
+            "link": "/#original"
+          }
+        },
+        "why": {
+          "type": "link",
+          "settings": {
+            "label": "Why wool",
+            "link": "/#reason"
+          }
+        },
+        "guides": {
+          "type": "link",
+          "settings": {
+            "label": "Sauna Guides",
+            "link": "/blogs/info"
+          }
+        }
+      },
+      "block_order": ["shop", "why", "guides"]
+    }
+  },
+  "order": ["announcement-bar", "header"]
+}

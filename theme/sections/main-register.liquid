@@ -1,0 +1,22 @@
+<section class="page-content" {{ section.shopify_attributes }}>
+  <h1>{{ 'customer.register.title' | t }}</h1>
+  {% form 'create_customer' %}
+    {{ form.errors | default_errors }}
+    <label for="RegisterFirstName">{{ 'customer.register.first_name' | t }}</label>
+    <input id="RegisterFirstName" type="text" name="customer[first_name]" autocomplete="given-name">
+    <label for="RegisterLastName">{{ 'customer.register.last_name' | t }}</label>
+    <input id="RegisterLastName" type="text" name="customer[last_name]" autocomplete="family-name">
+    <label for="RegisterEmail">{{ 'customer.register.email' | t }}</label>
+    <input id="RegisterEmail" type="email" name="customer[email]" autocomplete="email" required>
+    <label for="RegisterPassword">{{ 'customer.register.password' | t }}</label>
+    <input id="RegisterPassword" type="password" name="customer[password]" autocomplete="new-password" required>
+    <button class="button button-dark" type="submit">{{ 'customer.register.submit' | t }}</button>
+  {% endform %}
+</section>
+
+{% schema %}
+{
+  "name": "Register",
+  "settings": []
+}
+{% endschema %}

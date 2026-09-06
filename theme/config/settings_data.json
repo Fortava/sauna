@@ -8,43 +8,6 @@
     "color_cream": "#f2e8d8",
     "color_sand": "#ddc8aa",
     "color_ember": "#8b3827",
-    "color_muted": "#756253",
-    "sections": {
-      "announcement-bar": {
-        "type": "announcement-bar",
-        "settings": {
-          "item_1": "Natural wool",
-          "item_2": "Designed in Australia",
-          "item_3": "Ukrainian felt"
-        }
-      },
-      "header": {
-        "type": "header",
-        "settings": {
-          "menu": "",
-          "show_bag": true
-        }
-      },
-      "footer": {
-        "type": "footer",
-        "settings": {
-          "tagline": "Premium organic wool sauna hats.\nDesigned in Australia. Crafted in Ukraine.",
-          "show_contact": true,
-          "contact_label": "Contact",
-          "show_instagram": true,
-          "show_blog": true,
-          "blog_label": "Sauna Guides"
-        }
-      },
-      "cart-drawer": {
-        "type": "cart-drawer",
-        "settings": {
-          "empty_heading": "Still deciding?",
-          "empty_link_label": "Meet the hat ↓",
-          "checkout_label": "Secure checkout"
-        }
-      }
-    },
-    "content_for_index": []
+    "color_muted": "#756253"
   }
 }

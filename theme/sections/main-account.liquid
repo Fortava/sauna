@@ -1,0 +1,26 @@
+<section class="page-content" {{ section.shopify_attributes }}>
+  <h1>{{ 'customer.account.title' | t }}</h1>
+  <p><a href="{{ routes.account_logout_url }}">{{ 'customer.account.log_out' | t }}</a></p>
+  <h2>{{ 'customer.account.details' | t }}</h2>
+  <p>{{ customer.default_address | format_address }}</p>
+  <h2>{{ 'customer.orders.title' | t }}</h2>
+  {% if customer.orders.size > 0 %}
+    <ul>
+      {% for order in customer.orders %}
+        <li>
+          <a href="{{ order.customer_url }}">{{ order.name }}</a>
+          — {{ order.created_at | date: '%d %b %Y' }} — {{ order.total_net_amount | money }}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>{{ 'customer.orders.none' | t }}</p>
+  {% endif %}
+</section>
+
+{% schema %}
+{
+  "name": "Account",
+  "settings": []
+}
+{% endschema %}

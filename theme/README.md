@@ -1,45 +1,37 @@
 # BÖRN Shopify theme
 
-Custom Online Store 2.0 theme for [bornsauna.com.au](https://bornsauna.com.au).
+Online Store 2.0 theme for [bornsauna.com.au](https://bornsauna.com.au).  
+Everything on-storefront is editable in **Customize** — no code required for copy, images, menus, or product.
 
-**Design:** refined laptop storefront layout (cream / ember / split hero).  
-**Content:** live Shopify copy, product photos, variants/pricing, and Sauna Guides blog.  
-**Privacy:** no personal names or emails are published on the storefront — contact goes through a Contact page.
+## Upload
 
-## What to edit in Shopify Admin
+1. Admin → **Online Store → Themes → Add theme → Upload zip** (`born-shopify-theme.zip`)
+2. **Customize** (do not publish yet)
 
-| What | Where |
+## First-time setup (5 minutes)
+
+| Step | Where |
 | --- | --- |
-| Price, colours, stock | **Products → Premium Wool Sauna Hat** |
-| Homepage copy & images | **Online Store → Themes → Customize** |
-| Announcement / header / footer | Theme editor → matching sections |
-| Blog posts | **Online Store → Blog posts** (Sauna Guides / `info`) |
-| SEO titles & descriptions | Product / page / blog “Search engine listing” + Theme settings → SEO defaults |
-| Brand colours, Instagram, contact page | Theme settings (Customize sidebar) |
+| Pick product | Homepage → **Hero product** → Featured product → **Premium Wool Sauna Hat** |
+| Nav links | Header group → **Header** → link blocks (or assign a Menu) |
+| Contact | Theme settings → Contact page |
+| Instagram | Theme settings → Instagram URL |
+| SEO | Theme settings → SEO defaults |
+| Guides blog | Homepage → **Sauna guides** → select `info` blog if needed |
 
-## First publish checklist
+Price, colours, and stock always come from **Products** in Admin.
 
-1. Upload `born-shopify-theme.zip` as an unpublished theme.
-2. **Customize → Hero product** → select **Premium Wool Sauna Hat**.
-3. **Sauna guides** → select the **info** blog if needed.
-4. Theme settings → set Instagram URL and Contact page (no email on-site).
-5. Confirm homepage SEO title/description under Theme settings → SEO defaults.
-6. Preview mobile + desktop, test checkout, then publish.
+## What Wayne can edit
 
-## Traffic & SEO levers in this theme
+- Homepage sections: hero, performance, why wool, details, FAQ, guides, newsletter  
+- Header / announcement / footer / cart drawer  
+- Product, blog, article, collection, page templates  
+- Brand name (**BÖRN**), colours, SEO title/description, share image  
 
-- FAQ block with `FAQPage` schema (rich-result eligible)
-- Sauna Guides on homepage + related guides on product/article pages (internal links)
-- Article share links + product CTA to convert guide readers
-- Newsletter capture (owned audience)
-- Search Console / Bing verification fields in theme settings
-- CTR-focused homepage title & meta description defaults
-
-After upload: connect Search Console, submit sitemap (`/sitemap.xml`), and keep publishing Sauna Guides on search questions people already ask.
-
-## Develop locally
+## Develop
 
 ```sh
 cd theme
+npm exec -- @shopify/cli@latest theme check
 npm exec -- @shopify/cli@latest theme dev --store YOURSTORE.myshopify.com
 ```

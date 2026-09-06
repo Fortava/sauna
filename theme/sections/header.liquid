@@ -8,12 +8,12 @@
       {%- for link in section.settings.menu.links -%}
         <a href="{{ link.url }}"{% if link.active %} aria-current="page"{% endif %}>{{ link.title }}</a>
       {%- endfor -%}
-    {%- else -%}
-      <a href="{{ routes.root_url }}#original">Shop</a>
-      <a href="{{ routes.root_url }}#reason">Why wool</a>
-      {%- if blogs.info -%}
-        <a href="{{ blogs.info.url }}">Sauna Guides</a>
-      {%- endif -%}
+    {%- elsif section.blocks.size > 0 -%}
+      {%- for block in section.blocks -%}
+        {% if block.settings.label != blank %}
+          <a href="{{ block.settings.link | default: routes.root_url }}" {{ block.shopify_attributes }}>{{ block.settings.label }}</a>
+        {% endif %}
+      {%- endfor -%}
     {%- endif -%}
   </nav>
 
@@ -33,13 +33,32 @@
       "type": "link_list",
       "id": "menu",
       "label": "Menu",
-      "info": "Leave empty to use Shop, Why wool, and Sauna Guides."
+      "info": "Optional. If set, this replaces the link blocks below."
     },
     {
       "type": "checkbox",
       "id": "show_bag",
       "label": "Show bag button",
       "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "link",
+      "name": "Link",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Shop"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
     }
   ]
 }

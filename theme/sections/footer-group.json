@@ -1,0 +1,18 @@
+{
+  "type": "footer",
+  "name": "Footer",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "settings": {
+        "tagline": "Premium organic wool sauna hats.\nDesigned in Australia. Crafted in Ukraine.",
+        "show_contact": true,
+        "contact_label": "Contact",
+        "show_instagram": true,
+        "show_blog": true,
+        "blog_label": "Sauna Guides"
+      }
+    }
+  },
+  "order": ["footer"]
+}

@@ -17,6 +17,10 @@
       "placeholder": "Search",
       "no_results": "No results found for “{{ terms }}”.",
       "submit": "Search"
+    },
+    "password_page": {
+      "password": "Password",
+      "submit": "Enter"
     }
   },
   "products": {
@@ -53,6 +57,32 @@
     "general": {
       "empty": "No products found.",
       "title": "Products"
+    }
+  },
+  "customer": {
+    "login": {
+      "title": "Login",
+      "email": "Email",
+      "password": "Password",
+      "sign_in": "Sign in",
+      "create_account": "Create account"
+    },
+    "register": {
+      "title": "Create account",
+      "first_name": "First name",
+      "last_name": "Last name",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Create"
+    },
+    "account": {
+      "title": "Account",
+      "details": "Account details",
+      "log_out": "Log out"
+    },
+    "orders": {
+      "title": "Order history",
+      "none": "You haven’t placed any orders yet."
     }
   },
   "404": {
