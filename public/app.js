@@ -1,7 +1,7 @@
-// Paste the Square Payment Link for The Original here when it is ready.
-const CHECKOUT_LINK = "";
-const PRODUCT = { name: "The Original", colour: "Natural oat", price: 79 };
-const state = { quantity: 0 };
+// Paste one Square Payment Link per colour here when they are ready.
+const CHECKOUT_LINKS = { "Natural oat": "", Charcoal: "" };
+const PRODUCT = { name: "The Original", price: 79 };
+const state = { selectedColour: "Natural oat", items: [] };
 
 const bagButton = document.querySelector(".bag-button");
 const bagCount = document.querySelector(".bag-count");
@@ -31,32 +31,48 @@ function closeCart({ restoreFocus = true } = {}) {
 }
 
 function renderCart() {
-  cartItems.innerHTML = state.quantity
-    ? `<div class="cart-row"><span class="cart-thumb" aria-hidden="true"></span><div><h3>${PRODUCT.name}</h3><p>${PRODUCT.colour} · Qty ${state.quantity} · $${PRODUCT.price * state.quantity} AUD</p></div><button class="remove-item" type="button">Remove</button></div>`
-    : "";
-  bagCount.textContent = state.quantity;
-  document.querySelector(".cart-title-count").textContent = `(${state.quantity})`;
-  document.querySelector(".cart-total").textContent = `$${PRODUCT.price * state.quantity} AUD`;
-  cartEmpty.hidden = state.quantity > 0;
-  cartFooter.hidden = state.quantity === 0;
+  const grouped = Object.entries(state.items.reduce((items, colour) => {
+    items[colour] = (items[colour] || 0) + 1;
+    return items;
+  }, {}));
+  cartItems.innerHTML = grouped.map(([colour, quantity]) => `<div class="cart-row"><span class="cart-thumb ${colour === "Charcoal" ? "charcoal" : "oat"}" aria-hidden="true"></span><div><h3>${PRODUCT.name}</h3><p>${colour} · Qty ${quantity} · $${PRODUCT.price * quantity} AUD</p></div><button class="remove-item" type="button" data-colour="${colour}">Remove</button></div>`).join("");
+  bagCount.textContent = state.items.length;
+  document.querySelector(".cart-title-count").textContent = `(${state.items.length})`;
+  document.querySelector(".cart-total").textContent = `$${PRODUCT.price * state.items.length} AUD`;
+  cartEmpty.hidden = state.items.length > 0;
+  cartFooter.hidden = state.items.length === 0;
 }
 
 document.querySelectorAll("[data-add-product]").forEach((button) => button.addEventListener("click", () => {
-  state.quantity += 1;
+  state.items.push(state.selectedColour);
   renderCart();
   openCart();
 }));
 cartItems.addEventListener("click", (event) => {
-  if (!event.target.closest(".remove-item")) return;
-  state.quantity = Math.max(0, state.quantity - 1);
+  const removeButton = event.target.closest(".remove-item");
+  if (!removeButton) return;
+  const index = state.items.indexOf(removeButton.dataset.colour);
+  if (index >= 0) state.items.splice(index, 1);
   renderCart();
 });
+document.querySelectorAll(".variant").forEach((button) => button.addEventListener("click", () => {
+  state.selectedColour = button.dataset.variant;
+  document.querySelectorAll(".variant").forEach((variant) => {
+    const selected = variant === button;
+    variant.classList.toggle("active", selected);
+    variant.setAttribute("aria-pressed", String(selected));
+  });
+  document.querySelector(".selected-variant").textContent = state.selectedColour;
+  document.querySelector(".hero-colour").textContent = state.selectedColour;
+  document.querySelector(".mobile-buy strong").textContent = `${PRODUCT.name} · ${state.selectedColour} · $${PRODUCT.price}`;
+}));
 bagButton.addEventListener("click", openCart);
 document.querySelector(".cart-close").addEventListener("click", () => closeCart());
 document.querySelector(".cart-shop").addEventListener("click", () => closeCart({ restoreFocus: false }));
 backdrop.addEventListener("click", () => closeCart());
 document.querySelector(".checkout-button").addEventListener("click", () => {
-  if (CHECKOUT_LINK) return void (window.location.href = CHECKOUT_LINK);
+  const colours = [...new Set(state.items)];
+  if (colours.length === 1 && CHECKOUT_LINKS[colours[0]]) return void (window.location.href = CHECKOUT_LINKS[colours[0]]);
   closeCart({ restoreFocus: false });
   setupDialog.showModal();
 });
