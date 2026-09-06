@@ -1,0 +1,96 @@
+<section class="newsletter" id="newsletter" aria-labelledby="NewsletterTitle-{{ section.id }}" {{ section.shopify_attributes }}>
+  <div class="newsletter__copy reveal">
+    {% if section.settings.eyebrow != blank %}
+      <p class="eyebrow ember-text">{{ section.settings.eyebrow }}</p>
+    {% endif %}
+    <h2 id="NewsletterTitle-{{ section.id }}">{{ section.settings.heading | newline_to_br }}</h2>
+    {% if section.settings.subcopy != blank %}
+      <p>{{ section.settings.subcopy }}</p>
+    {% endif %}
+  </div>
+
+  <div class="newsletter__form reveal">
+    {% form 'customer', class: 'newsletter-form' %}
+      <input type="hidden" name="contact[tags]" value="newsletter,sauna-guides">
+      <label class="visually-hidden" for="NewsletterEmail-{{ section.id }}">Email</label>
+      <input
+        id="NewsletterEmail-{{ section.id }}"
+        type="email"
+        name="contact[email]"
+        value="{{ form.email }}"
+        placeholder="{{ section.settings.placeholder | default: 'Email address' }}"
+        required
+        autocomplete="email"
+      >
+      <button type="submit" class="button button-dark">
+        {{ section.settings.button_label | default: 'Subscribe' }}
+        <span>→</span>
+      </button>
+
+      {% if form.posted_successfully? %}
+        <p class="newsletter__success" role="status">{{ section.settings.success_message }}</p>
+      {% endif %}
+      {% if form.errors %}
+        <p class="newsletter__error" role="alert">{{ form.errors.messages.email | default: form.errors | join: ', ' }}</p>
+      {% endif %}
+    {% endform %}
+    {% if section.settings.privacy_note != blank %}
+      <small>{{ section.settings.privacy_note }}</small>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Newsletter",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Stay close to the heat"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Guides &\nnew drops."
+    },
+    {
+      "type": "textarea",
+      "id": "subcopy",
+      "label": "Supporting copy",
+      "default": "Occasional notes on wool, ritual, care, and product releases — no clutter."
+    },
+    {
+      "type": "text",
+      "id": "placeholder",
+      "label": "Email placeholder",
+      "default": "Email address"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Subscribe"
+    },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "Success message",
+      "default": "You’re on the list."
+    },
+    {
+      "type": "text",
+      "id": "privacy_note",
+      "label": "Privacy note",
+      "default": "Unsubscribe anytime. We never share your address."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Newsletter"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,110 @@
+{%- liquid
+  assign blog = section.settings.blog
+  if blog == blank
+    assign blog = blogs.info
+  endif
+  assign limit = section.settings.limit | default: 3
+  assign shown = 0
+-%}
+
+{% if blog != blank and blog.articles_count > 0 %}
+  <section class="related-guides" aria-labelledby="RelatedGuides-{{ section.id }}" {{ section.shopify_attributes }}>
+    <div class="related-guides__intro">
+      {% if section.settings.eyebrow != blank %}
+        <p class="eyebrow ember-text">{{ section.settings.eyebrow }}</p>
+      {% endif %}
+      <h2 id="RelatedGuides-{{ section.id }}">{{ section.settings.heading }}</h2>
+      {% if section.settings.show_all_label != blank %}
+        <a class="line-link" href="{{ blog.url }}">{{ section.settings.show_all_label }}</a>
+      {% endif %}
+    </div>
+
+    <div class="guides__grid">
+      {% for post in blog.articles %}
+        {% if request.page_type == 'article' and post.id == article.id %}
+          {% continue %}
+        {% endif %}
+        {% if shown >= limit %}
+          {% break %}
+        {% endif %}
+        <article class="guide-card">
+          <a href="{{ post.url }}" class="guide-card__media">
+            {% if post.image %}
+              {{ post.image | image_url: width: 800 | image_tag: loading: 'lazy', alt: post.title }}
+            {% endif %}
+          </a>
+          <div class="guide-card__copy">
+            <p class="eyebrow">{{ post.published_at | date: '%d %b %Y' }}</p>
+            <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
+          </div>
+        </article>
+        {% assign shown = shown | plus: 1 %}
+      {% endfor %}
+    </div>
+
+    {% if section.settings.product_cta_label != blank %}
+      <div class="related-guides__shop">
+        <a class="button button-dark" href="{{ section.settings.product_cta_link | default: routes.root_url }}">
+          {{ section.settings.product_cta_label }}
+          <span>→</span>
+        </a>
+      </div>
+    {% endif %}
+  </section>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Related guides",
+  "settings": [
+    {
+      "type": "blog",
+      "id": "blog",
+      "label": "Blog"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Keep reading"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "More from Sauna Guides"
+    },
+    {
+      "type": "text",
+      "id": "show_all_label",
+      "label": "View all label",
+      "default": "All guides →"
+    },
+    {
+      "type": "range",
+      "id": "limit",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "label": "Articles to show",
+      "default": 3
+    },
+    {
+      "type": "text",
+      "id": "product_cta_label",
+      "label": "Product CTA label",
+      "default": "Shop the wool sauna hat"
+    },
+    {
+      "type": "url",
+      "id": "product_cta_link",
+      "label": "Product CTA link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Related guides"
+    }
+  ]
+}
+{% endschema %}

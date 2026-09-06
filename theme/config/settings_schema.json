@@ -2,7 +2,7 @@
   {
     "name": "theme_info",
     "theme_name": "BÖRN",
-    "theme_version": "1.1.0",
+    "theme_version": "1.2.0",
     "theme_author": "BÖRN",
     "theme_documentation_url": "https://bornsauna.com.au",
     "theme_support_url": "https://bornsauna.com.au/pages/contact"
@@ -65,14 +65,14 @@
         "type": "text",
         "id": "seo_home_title",
         "label": "Homepage title",
-        "default": "Premium Organic Wool Sauna Hats | BÖRN",
+        "default": "Wool Sauna Hats Australia | Premium Organic Felt | BÖRN",
         "info": "50–60 characters ideal. Overrides the default Shopify homepage title."
       },
       {
         "type": "textarea",
         "id": "seo_home_description",
         "label": "Homepage meta description",
-        "default": "Handcrafted Ukrainian wool sauna hats designed in Australia for thermal protection, hair & scalp care, and longer heat sessions. Worldwide shipping.",
+        "default": "Buy premium organic wool sauna hats designed in Australia. Heavyweight Ukrainian felt for heat protection, hair care & longer sessions. Natural oat & charcoal. Worldwide shipping.",
         "info": "150–160 characters ideal. Used when the homepage has no custom SEO description in Admin."
       },
       {
@@ -87,6 +87,18 @@
         "id": "share_image",
         "label": "Default social share image",
         "info": "Recommended 1200×630. Used for Open Graph / Twitter when the page has no image."
+      },
+      {
+        "type": "text",
+        "id": "google_site_verification",
+        "label": "Google Search Console verification",
+        "info": "Paste the content value from Google’s meta verification tag only."
+      },
+      {
+        "type": "text",
+        "id": "bing_site_verification",
+        "label": "Bing Webmaster verification",
+        "info": "Optional Bing msvalidate.01 content value."
       }
     ]
   },

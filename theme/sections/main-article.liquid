@@ -21,6 +21,22 @@
   <div class="article-page__content rte">
     {{ article.content }}
   </div>
+
+  {% if section.settings.show_share %}
+    {% render 'social-share', share_label: section.settings.share_label %}
+  {% endif %}
+
+  {% if section.settings.show_product_cta %}
+    <aside class="article-page__cta">
+      <p class="eyebrow ember-text">{{ section.settings.cta_eyebrow | default: 'The ritual essential' }}</p>
+      <h2>{{ section.settings.cta_heading | default: 'Wear the wool.' }}</h2>
+      <p>{{ section.settings.cta_text | default: 'Premium Ukrainian wool felt. Designed in Australia for longer, clearer heat sessions.' }}</p>
+      <a class="button button-dark" href="{{ section.settings.cta_link | default: routes.root_url }}">
+        {{ section.settings.cta_label | default: 'Shop the sauna hat' }}
+        <span>→</span>
+      </a>
+    </aside>
+  {% endif %}
 </article>
 
 {% schema %}
@@ -32,6 +48,54 @@
       "id": "show_image",
       "label": "Show featured image",
       "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_share",
+      "label": "Show share links",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "share_label",
+      "label": "Share label",
+      "default": "Share this guide"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_product_cta",
+      "label": "Show product CTA",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "cta_eyebrow",
+      "label": "CTA eyebrow",
+      "default": "The ritual essential"
+    },
+    {
+      "type": "text",
+      "id": "cta_heading",
+      "label": "CTA heading",
+      "default": "Wear the wool."
+    },
+    {
+      "type": "textarea",
+      "id": "cta_text",
+      "label": "CTA text",
+      "default": "Premium Ukrainian wool felt. Designed in Australia for longer, clearer heat sessions."
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "CTA button",
+      "default": "Shop the sauna hat"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA link",
+      "info": "Link to the product or homepage hero."
     }
   ]
 }

@@ -3,9 +3,28 @@
     "main": {
       "type": "main-article",
       "settings": {
-        "show_image": true
+        "show_image": true,
+        "show_share": true,
+        "share_label": "Share this guide",
+        "show_product_cta": true,
+        "cta_eyebrow": "The ritual essential",
+        "cta_heading": "Wear the wool.",
+        "cta_text": "Premium Ukrainian wool felt. Designed in Australia for longer, clearer heat sessions.",
+        "cta_label": "Shop the sauna hat",
+        "cta_link": "/products/premium-wool-sauna-hat"
+      }
+    },
+    "related": {
+      "type": "related-guides",
+      "settings": {
+        "eyebrow": "Keep reading",
+        "heading": "More from Sauna Guides",
+        "show_all_label": "All guides →",
+        "limit": 3,
+        "product_cta_label": "Shop the wool sauna hat",
+        "product_cta_link": "/products/premium-wool-sauna-hat"
       }
     }
   },
-  "order": ["main"]
+  "order": ["main", "related"]
 }

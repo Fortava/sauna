@@ -26,14 +26,16 @@ Custom Online Store 2.0 theme for [bornsauna.com.au](https://bornsauna.com.au).
 5. Confirm homepage SEO title/description under Theme settings → SEO defaults.
 6. Preview mobile + desktop, test checkout, then publish.
 
-## SEO included
+## Traffic & SEO levers in this theme
 
-- Homepage title + meta description defaults (editable)
-- Canonical URLs, Open Graph, Twitter cards, `og:locale`
-- Robots rules: index public pages; noindex cart, search, account, paginated/tag filters
-- JSON-LD: Organization, WebSite, BreadcrumbList, Product offers, CollectionPage, Blog, BlogPosting
-- Blog authors attributed to the brand Organization (not personal names)
-- CDN preconnect + preloaded stylesheet
+- FAQ block with `FAQPage` schema (rich-result eligible)
+- Sauna Guides on homepage + related guides on product/article pages (internal links)
+- Article share links + product CTA to convert guide readers
+- Newsletter capture (owned audience)
+- Search Console / Bing verification fields in theme settings
+- CTR-focused homepage title & meta description defaults
+
+After upload: connect Search Console, submit sitemap (`/sitemap.xml`), and keep publishing Sauna Guides on search questions people already ask.
 
 ## Develop locally
 

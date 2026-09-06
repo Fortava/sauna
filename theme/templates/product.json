@@ -3,7 +3,53 @@
     "main": {
       "type": "main-product",
       "settings": {}
+    },
+    "faq": {
+      "type": "faq",
+      "blocks": {
+        "q1": {
+          "type": "question",
+          "settings": {
+            "question": "Why wear a sauna hat?",
+            "answer": "Your head sits in the hottest zone of the sauna. A dense wool hat buffers that heat so you can stay longer, protect hair and scalp, and keep the session clear and calm."
+          }
+        },
+        "q2": {
+          "type": "question",
+          "settings": {
+            "question": "Why wool instead of linen or synthetics?",
+            "answer": "Natural wool creates a breathable microclimate: it slows radiant heat while releasing moisture vapour. Synthetics can trap heat against the skin; linen is lighter but less thermally dense for serious heat."
+          }
+        },
+        "q3": {
+          "type": "question",
+          "settings": {
+            "question": "How do I care for the hat?",
+            "answer": "Cool hand wash, reshape while damp, and air dry away from direct heat. Avoid tumble drying."
+          }
+        }
+      },
+      "block_order": ["q1", "q2", "q3"],
+      "settings": {
+        "eyebrow": "Product FAQ",
+        "heading": "Good to\nknow.",
+        "lead": "Quick answers before you add to bag.",
+        "open_first": false,
+        "cta_label": "",
+        "cta_link": ""
+      }
+    },
+    "related": {
+      "type": "related-guides",
+      "settings": {
+        "eyebrow": "Learn the ritual",
+        "heading": "Sauna Guides",
+        "show_all_label": "All guides →",
+        "limit": 3,
+        "product_cta_label": "",
+        "product_cta_link": ""
+      }
     }
   },
-  "order": ["main"]
+  "order": ["main", "faq", "related"]
 }

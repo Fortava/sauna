@@ -1,0 +1,13 @@
+{%- liquid
+  assign share_url = shop.url | append: request.path | url_encode
+  assign share_title = page_title | url_encode
+-%}
+<nav class="social-share" aria-label="{{ share_label | default: 'Share' }}">
+  <p class="eyebrow">{{ share_label | default: 'Share' }}</p>
+  <div class="social-share__links">
+    <a href="https://www.facebook.com/sharer/sharer.php?u={{ share_url }}" target="_blank" rel="noopener noreferrer">Facebook</a>
+    <a href="https://twitter.com/intent/tweet?url={{ share_url }}&text={{ share_title }}" target="_blank" rel="noopener noreferrer">X</a>
+    <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ share_url }}" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+    <a href="mailto:?subject={{ share_title }}&body={{ share_url }}">Email</a>
+  </div>
+</nav>

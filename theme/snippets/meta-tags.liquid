@@ -91,6 +91,13 @@
 <meta name="author" content="{{ brand | escape }}">
 <link rel="canonical" href="{{ canonical_url }}">
 
+{% if settings.google_site_verification != blank %}
+  <meta name="google-site-verification" content="{{ settings.google_site_verification | escape }}">
+{% endif %}
+{% if settings.bing_site_verification != blank %}
+  <meta name="msvalidate.01" content="{{ settings.bing_site_verification | escape }}">
+{% endif %}
+
 {% if robots_content != blank %}
   <meta name="robots" content="{{ robots_content }}">
   <meta name="googlebot" content="{{ robots_content }}">

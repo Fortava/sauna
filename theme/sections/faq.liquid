@@ -1,0 +1,150 @@
+<section class="faq" id="faq" aria-labelledby="FaqTitle-{{ section.id }}" {{ section.shopify_attributes }}>
+  <div class="faq__intro reveal">
+    {% if section.settings.eyebrow != blank %}
+      <p class="eyebrow ember-text">{{ section.settings.eyebrow }}</p>
+    {% endif %}
+    <h2 id="FaqTitle-{{ section.id }}">{{ section.settings.heading | newline_to_br }}</h2>
+    {% if section.settings.lead != blank %}
+      <p>{{ section.settings.lead }}</p>
+    {% endif %}
+  </div>
+
+  <div class="faq__list">
+    {% for block in section.blocks %}
+      <details class="faq__item reveal" {{ block.shopify_attributes }}{% if forloop.first and section.settings.open_first %} open{% endif %}>
+        <summary>{{ block.settings.question }}</summary>
+        <div class="faq__answer rte">{{ block.settings.answer | newline_to_br }}</div>
+      </details>
+    {% endfor %}
+  </div>
+
+  {% if section.settings.cta_label != blank %}
+    <a class="line-link faq__cta" href="{{ section.settings.cta_link | default: '#original' }}">{{ section.settings.cta_label }}</a>
+  {% endif %}
+</section>
+
+{% if section.blocks.size > 0 %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {%- for block in section.blocks -%}
+    {
+      "@type": "Question",
+      "name": {{ block.settings.question | json }},
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": {{ block.settings.answer | strip_html | json }}
+      }
+    }{% unless forloop.last %},{% endunless %}
+    {%- endfor -%}
+  ]
+}
+</script>
+{% endif %}
+
+{% schema %}
+{
+  "name": "FAQ",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Common questions"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Before you\nbegin."
+    },
+    {
+      "type": "textarea",
+      "id": "lead",
+      "label": "Lead",
+      "default": "Straight answers for first-time wearers and serious heat practitioners."
+    },
+    {
+      "type": "checkbox",
+      "id": "open_first",
+      "label": "Open first question",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "CTA label",
+      "default": "Shop the wool hat →"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "Why wear a sauna hat?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer",
+          "default": "Your head sits in the hottest zone of the sauna. A dense wool hat buffers that heat so you can stay longer, protect hair and scalp, and keep the session clear and calm."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ",
+      "blocks": [
+        {
+          "type": "question",
+          "settings": {
+            "question": "Why wear a sauna hat?",
+            "answer": "Your head sits in the hottest zone of the sauna. A dense wool hat buffers that heat so you can stay longer, protect hair and scalp, and keep the session clear and calm."
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "Why wool instead of linen or synthetics?",
+            "answer": "Natural wool creates a breathable microclimate: it slows radiant heat while releasing moisture vapour. Synthetics can trap heat against the skin; linen is lighter but less thermally dense for serious heat."
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "Is one size enough?",
+            "answer": "Yes. BÖRN uses a flexible one-size felt silhouette shaped to sit securely without tight pressure — suited to most adult heads."
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "How do I care for the hat?",
+            "answer": "Cool hand wash, reshape while damp, and air dry away from direct heat. Avoid tumble drying. Dense Ukrainian wool holds form across many intense sessions when cared for this way."
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "Do you ship worldwide?",
+            "answer": "Yes. Shipping is calculated at checkout. Australian design, Ukrainian wool craft, delivered wherever your ritual is."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

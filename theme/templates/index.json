@@ -111,6 +111,55 @@
         "heading": "The\ndetails."
       }
     },
+    "faq": {
+      "type": "faq",
+      "blocks": {
+        "q1": {
+          "type": "question",
+          "settings": {
+            "question": "Why wear a sauna hat?",
+            "answer": "Your head sits in the hottest zone of the sauna. A dense wool hat buffers that heat so you can stay longer, protect hair and scalp, and keep the session clear and calm."
+          }
+        },
+        "q2": {
+          "type": "question",
+          "settings": {
+            "question": "Why wool instead of linen or synthetics?",
+            "answer": "Natural wool creates a breathable microclimate: it slows radiant heat while releasing moisture vapour. Synthetics can trap heat against the skin; linen is lighter but less thermally dense for serious heat."
+          }
+        },
+        "q3": {
+          "type": "question",
+          "settings": {
+            "question": "Is one size enough?",
+            "answer": "Yes. BÖRN uses a flexible one-size felt silhouette shaped to sit securely without tight pressure — suited to most adult heads."
+          }
+        },
+        "q4": {
+          "type": "question",
+          "settings": {
+            "question": "How do I care for the hat?",
+            "answer": "Cool hand wash, reshape while damp, and air dry away from direct heat. Avoid tumble drying. Dense Ukrainian wool holds form across many intense sessions when cared for this way."
+          }
+        },
+        "q5": {
+          "type": "question",
+          "settings": {
+            "question": "Do you ship worldwide?",
+            "answer": "Yes. Shipping is calculated at checkout. Australian design, Ukrainian wool craft, delivered wherever your ritual is."
+          }
+        }
+      },
+      "block_order": ["q1", "q2", "q3", "q4", "q5"],
+      "settings": {
+        "eyebrow": "Common questions",
+        "heading": "Before you\nbegin.",
+        "lead": "Straight answers for first-time wearers and serious heat practitioners.",
+        "open_first": true,
+        "cta_label": "Shop the wool hat →",
+        "cta_link": "#original"
+      }
+    },
     "guides": {
       "type": "blog-preview",
       "settings": {
@@ -120,7 +169,19 @@
         "show_all_label": "All guides →",
         "limit": 3
       }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "eyebrow": "Stay close to the heat",
+        "heading": "Guides &\nnew drops.",
+        "subcopy": "Occasional notes on wool, ritual, care, and product releases — no clutter.",
+        "placeholder": "Email address",
+        "button_label": "Subscribe",
+        "success_message": "You’re on the list.",
+        "privacy_note": "Unsubscribe anytime. We never share your address."
+      }
     }
   },
-  "order": ["hero", "performance", "why_wool", "details", "guides"]
+  "order": ["hero", "performance", "why_wool", "details", "faq", "guides", "newsletter"]
 }
